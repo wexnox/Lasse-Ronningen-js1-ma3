@@ -19,24 +19,28 @@ const proxy = "https://noroffcors.herokuapp.com/";
 const corsFix = proxy + url;
 const resultsContainer = document.querySelector(".results");
 
-async function getGames() {
+async function makeAPIGamesCall() {
   try {
     const response = await fetch(corsFix);
 
     const all = await response.json();
 
     const game = all.results;
+
     resultsContainer.innerHTML = "";
 
     for (let i = 0; i < game.length; i++) {
       if (i === 8) {
         break;
       }
-      resultsContainer.innerHTML += `<div class="result">${game[i].name}</div>`;
+      resultsContainer.innerHTML += `<div class="result">${game[i].name}.
+                                                  Rating ${game[i].rating}.
+                                              Tag length ${game[i].tags.length}
+                                     </div>`;
     }
   } catch (error) {
     console.log(error);
-    // resultsContainer.innerHTML = error;
+    resultsContainer.innerHTML = alert("error", error);
   }
 }
-getGames();
+makeAPIGamesCall();
